@@ -1,0 +1,16 @@
+html {
+    background-color: orange;
+    font-size: 20px;
+}
+
+.playStart {
+    background-color: greenyellow;
+}
+
+.playStand {
+    background-color: red;
+}
+
+.playHit {
+    background-color: greenyellow;
+}
