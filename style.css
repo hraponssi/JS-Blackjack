@@ -1,16 +1,67 @@
 html {
-    background-color: orange;
-    font-size: 20px;
+    background-color: gainsboro;
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 25px;
 }
 
 .playStart {
     background-color: greenyellow;
+    border-radius: 5px;
 }
 
 .playStand {
     background-color: red;
+    border-radius: 5px;
 }
 
 .playHit {
     background-color: greenyellow;
+    border-radius: 5px;
+}
+
+.nameInput {
+    background-color: greenyellow;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.infoDisplay {
+    background-color: greenyellow;
+    padding-left: 10px;
+    width: 320px;
+    border-radius: 10px;
+}
+
+.gameSection {
+    background-color: rgb(217, 249, 130);
+    padding-left: 10px;
+    padding-bottom: 5px;
+    width: 320px;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+.gameContent {
+    background-color: rgb(141, 194, 255);
+    padding-left: 10px;
+    width: 320px;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+.resultDisplay {
+    font-weight: bold;
+}
+
+.dealerResultDisplay {
+    font-weight: bold;
+}
+
+.winnerDisplay {
+    font-weight: bold;
 }

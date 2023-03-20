@@ -14,8 +14,9 @@
     </head>
     <div>
         <h1>JS-Blackjack</h3>
+        <p>Rules: Dealer stands on 17.</p>
     </div>
-    <div>
+    <div class="nameInput">
         <label for="nameField"><b>Enter a name here:</b></label>
         <input type="text" id="nameField" class="nameField">
         <input type="submit" value="Enter" class="nameSubmit">
@@ -25,12 +26,21 @@
         <p class="nameDisplay"></p>
         <p class="gameCount"></p>
     </div>
-    <div>
-        <h3>Game below:</h3>
+    <div class="gameSection">
+        <h3>Game:</h3>
         <label>Game controls:</label>
         <input type="submit" value="Play" class="playStart">
         <p></p>
         <input type="submit" value="Stand" class="playStand">
         <input type="submit" value="Hit" class="playHit">
+    </div>
+    <div class="gameContent">
+        <p class="cardDisplay"></p>
+        <p class="cardTotalDisplay"></p>
+        <p class="resultDisplay"></p>
+        <p class="dealerDisplay"></p>
+        <p class="dealerTotalDisplay"></p>
+        <p class="dealerResultDisplay"></p>
+        <p class="winnerDisplay"></p>
     </div>
 </html>
