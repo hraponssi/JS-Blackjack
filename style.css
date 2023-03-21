@@ -12,6 +12,16 @@ h3 {
     border-radius: 5px;
 }
 
+.playBetIncrease {
+    background-color: green;
+    border-radius: 5px;
+}
+
+.playBetDecrease {
+    background-color: orange;
+    border-radius: 5px;
+}
+
 .playStand {
     background-color: red;
     border-radius: 5px;
@@ -19,6 +29,11 @@ h3 {
 
 .playHit {
     background-color: greenyellow;
+    border-radius: 5px;
+}
+
+.playDouble {
+    background-color: yellow;
     border-radius: 5px;
 }
 

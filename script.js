@@ -2,11 +2,16 @@ const nameField = document.querySelector(".nameField");
 const nameSubmit = document.querySelector(".nameSubmit");
 
 const nameDisplay = document.querySelector(".nameDisplay");
+const balanceDisplay = document.querySelector(".balanceDisplay");
 const gameCount = document.querySelector(".gameCount");
+const currentBetDisplay = document.querySelector(".currentBetDisplay");
 
 const startButton = document.querySelector(".playStart");
+const raiseButton = document.querySelector(".playBetIncrease");
+const lowerButton = document.querySelector(".playBetDecrease");
 const standButton = document.querySelector(".playStand");
 const hitButton = document.querySelector(".playHit");
+const doubleButton = document.querySelector(".playDouble");
 
 const gameSection = document.querySelector(".gameSection");
 const gameContent = document.querySelector(".gameContent");
@@ -31,6 +36,9 @@ let userName = "";
 let gamesPlayed = 0;
 let winCount = 0;
 let playing = false;
+let balance = 1000;
+let currentBet = 0;
+let bet = 0;
 let cards = [];
 let dcards = [];
 let showDealerHand = false;
@@ -39,17 +47,22 @@ initialise();
 
 function initialise() {
     nameDisplay.textContent = "Your name: ";
+    balanceDisplay.textContent = "Your balance: " + balance;
     gameCount.textContent = "Game count: 0, Win count: 0 (0%)";
     nameSubmit.addEventListener("click", checkName);
     startButton.addEventListener("click", startGame);
+    raiseButton.addEventListener("click", raiseBet);
+    lowerButton.addEventListener("click", lowerBet);
     standButton.addEventListener("click", playerStand);
     hitButton.addEventListener("click", playerHit);
+    doubleButton.addEventListener("click", playerDouble);
     disableGame();
 }
 
 function disableGame() {
     standButton.disabled = true;
     hitButton.disabled = true;
+    doubleButton.disabled = true;
     startButton.disabled = false;
 }
 
@@ -62,17 +75,21 @@ function checkName() {
 }
 
 function updateStats() {
-    gameCount.textContent = "Game count: " + gamesPlayed + ", Win count: " + winCount + " (" + Math.floor(winCount*100/gamesPlayed) + "%)";
+    let winPercent = Math.floor(winCount*100/gamesPlayed);
+    if (gamesPlayed === 0) winPercent = 0;
+    gameCount.textContent = "Game count: " + gamesPlayed + ", Win count: " + winCount + " (" + winPercent + "%)";
+    balanceDisplay.textContent = "Your balance: " + balance;
+    currentBetDisplay.textContent = "Your bet: " + currentBet;
 }
 
 function updateCards() {
-    cardDisplay.textContent = "Your cards: " + cards.toString();
+    cardDisplay.textContent = "Your cards: " + formatCards(cards.toString());
     cardTotalDisplay.textContent = "Total value: " + cardsValue(cards);
     if (dcards.length === 0) {
         dealerDisplay.textContent = "The dealers hand: ";
         dealerTotalDisplay.textContent = "Dealer value: ";
     } else if (showDealerHand) {
-        dealerDisplay.textContent = "The dealers hand: " + dcards.toString();
+        dealerDisplay.textContent = "The dealers hand: " + formatCards(dcards.toString());
         dealerTotalDisplay.textContent = "Dealer value: " + cardsValue(dcards);
     } else {
         let dtext = "The dealers hand: ";
@@ -85,7 +102,7 @@ function updateCards() {
                 dtext += ", x"
             }
         }
-        dealerDisplay.textContent = dtext;
+        dealerDisplay.textContent = formatCards(dtext);
     }
 }
 
@@ -95,10 +112,13 @@ function startGame() {
         return;
     }
     gamesPlayed++;
+    bet = currentBet;
+    balance -= currentBet;
     updateStats();
     playing = true;
     standButton.disabled = false;
     hitButton.disabled = false;
+    if (balance >= currentBet) doubleButton.disabled = false;
     startButton.disabled = true;
     cards = [];
     dcards = [];
@@ -111,6 +131,11 @@ function startGame() {
     newPlayerCard();
     newDealerCard();
     newDealerCard();
+}
+
+function formatCards(icards) {
+    let fstring = icards.replace("11", "Jack").replace("12", "Queen").replace("13", "King");
+    return fstring;
 }
 
 function cardsValue(cardset) {
@@ -184,15 +209,40 @@ function endGame(reason) {
     winnerDisplay.textContent = "Winner: " + winner;
     if (winner === userName) {
         winCount++;
+        balance += bet*2;
         winnerDisplay.style.color = "green";
     } else if (winner === "dealer") {
         winnerDisplay.style.color = "red";
     } else {
+        balance += bet;
+        winnerDisplay.textContent = "A push, no winner."
         winnerDisplay.style.color = "yellow";
     }
+    bet = 0;
     disableGame();
     resultDisplay.textContent = reason;
     updateStats();
+}
+
+function raiseBet() {
+    if (currentBet+10 <= balance) {
+        currentBet += 10;
+    }
+    updateStats();
+}
+
+function lowerBet() {
+    if (currentBet-10 >= 0) {
+        currentBet -= 10;
+    }
+    updateStats();
+}
+
+function playerDouble() {
+    playerHit();
+    bet += currentBet;
+    balance -= currentBet;
+    endGame("You doubled and got " + cardsValue(cards));
 }
 
 function playerStand() {
