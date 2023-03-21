@@ -134,7 +134,7 @@ function startGame() {
 }
 
 function formatCards(icards) {
-    let fstring = icards.replace("11", "Jack").replace("12", "Queen").replace("13", "King");
+    let fstring = icards.replaceAll("11", "Jack").replaceAll("12", "Queen").replaceAll("13", "King");
     return fstring;
 }
 
